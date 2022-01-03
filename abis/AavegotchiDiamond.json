@@ -6674,5 +6674,24 @@
     ],
     "name": "ERC721ExecutedRental",
     "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "rentalId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "time",
+        "type": "uint256"
+      }
+    ],
+    "name": "AavegotchiRentalCanceled",
+    "type": "event"
   }
 ]

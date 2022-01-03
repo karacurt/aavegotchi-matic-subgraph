@@ -272,6 +272,20 @@ type Parcel @entity {
   historicalPrices: [BigInt!]
 }
 
+type ERC721RentalListing @entity {
+  id: ID!
+
+  erc721TokenAddress: String!
+  tokenId: BigInt!
+
+  owner: String!
+  rentee: String
+
+  time: BigInt!
+  period: BigInt!
+  amountPerDay: BigInt!
+}
+
 #type Upgrade @entity {
 #  id: ID!
 #  calldata:
