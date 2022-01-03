@@ -283,7 +283,7 @@ type ERC721RentalListing @entity {
 
   time: BigInt!
   period: BigInt!
-  amountPerDay: BigInt!
+  initialCost: BigInt!
 
   cancelled: Boolean!
 }

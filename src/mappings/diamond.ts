@@ -972,7 +972,7 @@ export function handleAavegotchiRentalAdd(event: AavegotchiRentalAdd): void {
     listing.rentee = "";
     listing.time = event.params.time;
     listing.period = event.params.period;
-    listing.amountPerDay = event.params.amountPerDay;
+    listing.initialCost = event.params.period.times(event.params.amountPerDay);
     listing.cancelled = false;
     listing.save();
 }
@@ -985,7 +985,7 @@ export function handleERC721ExecutedRental(event: ERC721ExecutedRental): void {
   listing.rentee = event.params.renter.toHexString();
   listing.time = event.params.time;
   listing.period = event.params.period;
-  listing.amountPerDay = event.params.amountPerDay;
+  listing.initialCost = event.params.period.times(event.params.amountPerDay);
   listing.cancelled = false;
   listing.save();
 }

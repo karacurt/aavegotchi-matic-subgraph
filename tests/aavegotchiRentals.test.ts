@@ -37,7 +37,7 @@ test("AavegotchiLending - add listing", () => {
     assert.fieldEquals("ERC721RentalListing", "1", "owner", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
     assert.fieldEquals("ERC721RentalListing", "1", "erc721TokenAddress", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
     assert.fieldEquals("ERC721RentalListing", "1", "tokenId", "1");
-    assert.fieldEquals("ERC721RentalListing", "1", "amountPerDay", "1");
+    assert.fieldEquals("ERC721RentalListing", "1", "initialCost", "1");
     assert.fieldEquals("ERC721RentalListing", "1", "period", "1");
     assert.fieldEquals("ERC721RentalListing", "1", "time", "1");
     assert.fieldEquals("ERC721RentalListing", "1", "cancelled", "false");
@@ -63,8 +63,8 @@ test("AavegotchiLending - execute listing", () => {
     event.parameters.push(new ethereum.EventParam("renter", ethereum.Value.fromAddress(Address.fromString("0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c"))));
     event.parameters.push(new ethereum.EventParam("erc721TokenAddress", ethereum.Value.fromAddress(Address.fromString("0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c"))));
     event.parameters.push(new ethereum.EventParam("erc721TokenId", ethereum.Value.fromSignedBigInt(BIGINT_ONE)));
-    event.parameters.push(new ethereum.EventParam("amountPerDay", ethereum.Value.fromSignedBigInt(BIGINT_ONE)));
-    event.parameters.push(new ethereum.EventParam("period", ethereum.Value.fromSignedBigInt(BIGINT_ONE)));
+    event.parameters.push(new ethereum.EventParam("initialCost", ethereum.Value.fromSignedBigInt(BIGINT_ONE)));
+    event.parameters.push(new ethereum.EventParam("period", ethereum.Value.fromSignedBigInt(BIGINT_ONE.plus(BIGINT_ONE))));
     event.parameters.push(new ethereum.EventParam("time", ethereum.Value.fromSignedBigInt(BIGINT_ONE.plus(BIGINT_ONE))));
     
     // execute handler with event
@@ -74,8 +74,8 @@ test("AavegotchiLending - execute listing", () => {
     assert.fieldEquals("ERC721RentalListing", "1", "owner", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
     assert.fieldEquals("ERC721RentalListing", "1", "erc721TokenAddress", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
     assert.fieldEquals("ERC721RentalListing", "1", "tokenId", "1");
-    assert.fieldEquals("ERC721RentalListing", "1", "amountPerDay", "1");
-    assert.fieldEquals("ERC721RentalListing", "1", "period", "1");
+    assert.fieldEquals("ERC721RentalListing", "1", "initialCost", "2");
+    assert.fieldEquals("ERC721RentalListing", "1", "period", "2");
     assert.fieldEquals("ERC721RentalListing", "1", "time", "2");
     assert.fieldEquals("ERC721RentalListing", "1", "cancelled", "false");
     assert.fieldEquals("ERC721RentalListing", "1", "rentee", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
@@ -96,7 +96,7 @@ test("AavegotchiLending - cancel listing", () => {
     
     event.parameters = new Array<ethereum.EventParam>();
     event.parameters.push(new ethereum.EventParam("rentalId", ethereum.Value.fromSignedBigInt(BIGINT_ONE)));
-    event.parameters.push(new ethereum.EventParam("time", ethereum.Value.fromSignedBigInt(BIGINT_ONE.plus(BIGINT_ONE).plus(BIGINT_ONE))));
+    event.parameters.push(new ethereum.EventParam("time", ethereum.Value.fromSignedBigInt(BIGINT_ONE.times(BigInt.fromI32(4)))));
     
     // execute handler with event
     handleAavegotchiRentalCanceled(event);
@@ -105,9 +105,9 @@ test("AavegotchiLending - cancel listing", () => {
     assert.fieldEquals("ERC721RentalListing", "1", "owner", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
     assert.fieldEquals("ERC721RentalListing", "1", "erc721TokenAddress", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
     assert.fieldEquals("ERC721RentalListing", "1", "tokenId", "1");
-    assert.fieldEquals("ERC721RentalListing", "1", "amountPerDay", "1");
-    assert.fieldEquals("ERC721RentalListing", "1", "period", "1");
-    assert.fieldEquals("ERC721RentalListing", "1", "time", "3");
+    assert.fieldEquals("ERC721RentalListing", "1", "initialCost", "2");
+    assert.fieldEquals("ERC721RentalListing", "1", "period", "2");
+    assert.fieldEquals("ERC721RentalListing", "1", "time", "4");
     assert.fieldEquals("ERC721RentalListing", "1", "cancelled", "true");
     assert.fieldEquals("ERC721RentalListing", "1", "rentee", "0x1ad3d72e54fb0eb46e87f82f77b284fc8a66b16c");
     clearStore();
