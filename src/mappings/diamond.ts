@@ -35,6 +35,9 @@ import {
   UpdateERC1155Listing,
   RemoveExperience,
   UpdateItemPrice,
+  AavegotchiRentalAdd,
+  ERC721ExecutedRental,
+  AavegotchiRentalCanceled,
 } from "../../generated/AavegotchiDiamond/AavegotchiDiamond";
 import {
   getOrCreateUser,
@@ -959,3 +962,15 @@ export function handleMintParcel(event: MintParcel): void {
   parcel.save();
 }
 
+// Rentals
+export function handleAavegotchiRentalAdd(event: AavegotchiRentalAdd): void {
+
+}
+
+export function handleERC721ExecutedRental(event: ERC721ExecutedRental): void {
+
+}
+
+export function handleAavegotchiRentalCanceled(event: AavegotchiRentalCanceled): void {
+
+}

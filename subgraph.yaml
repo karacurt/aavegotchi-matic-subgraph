@@ -94,6 +94,12 @@ dataSources:
           handler: handleRemoveExperience
         - event: UpdateItemPrice(uint256,uint256)
           handler: handleUpdateItemPrice
+        - event: AavegotchiRentalAdd(indexed uint256,indexed address,address,uint256,uint256,uint256,uint256)
+          handler: handleAavegotchiRentalAdd
+        - event: ERC721ExecutedRental(indexed uint256,indexed address,address,address,uint256,uint256,uint256,uint256)
+          handler: handleERC721ExecutedRental
+        - event: AavegotchiRentalCanceled(indexed uint256,uint256)
+          handler: handleAavegotchiRentalCanceled
         # - event: DiamondCut((address,uint8,bytes4[])[],address,bytes)
         #   handler: handleDiamondCut
   # - AavegotchiInteract(indexed uint256,uint256)
