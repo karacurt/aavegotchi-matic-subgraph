@@ -21,6 +21,7 @@ import {
   ERC1155Purchase,
   Parcel,
   ERC721RentalListing,
+  Whitelist,
 } from "../../../generated/schema";
 import { BIGINT_ZERO } from "../constants";
 import { Address, BigInt, Bytes, ethereum, log } from "@graphprotocol/graph-ts";
@@ -489,4 +490,30 @@ export function getOrCreateERC721RentalListing(id: string): ERC721RentalListing 
   }
 
   return listing;
+}
+
+export function updateWhitelist(id: BigInt, event: ethereum.Event): Whitelist | null{
+  let whitelist = Whitelist.load(id.toString());
+  if(!whitelist) {
+      whitelist = new Whitelist(id.toString());
+  }
+
+  let contract = AavegotchiDiamond.bind(event.address);
+  let data = contract.try_getWhitelist(id)
+
+  if(data.reverted) {
+      return null;
+  }
+
+  let value = data.value;
+  whitelist.name = value.name;
+  whitelist.owner = value.owner.toHexString();
+  let addresses = new Array<string>();
+  
+  for(let i=0; i<value.addresses.length; i++) {
+      addresses.push(value.addresses[i].toHexString());
+  }
+
+  whitelist.addresses = addresses;
+  return whitelist;
 }

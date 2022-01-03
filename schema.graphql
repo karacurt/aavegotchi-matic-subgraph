@@ -288,6 +288,13 @@ type ERC721RentalListing @entity {
   cancelled: Boolean!
 }
 
+type Whitelist @entity {
+  id: ID!
+  owner: String!
+  name: String!
+  addresses: [String!]!
+}
+
 #type Upgrade @entity {
 #  id: ID!
 #  calldata:

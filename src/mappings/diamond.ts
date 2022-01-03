@@ -38,6 +38,8 @@ import {
   AavegotchiRentalAdd,
   ERC721ExecutedRental,
   AavegotchiRentalCanceled,
+  WhitelistCreated,
+  WhitelistUpdated,
 } from "../../generated/AavegotchiDiamond/AavegotchiDiamond";
 import {
   getOrCreateUser,
@@ -56,6 +58,7 @@ import {
   updateERC1155PurchaseInfo,
   getOrCreateParcel,
   getOrCreateERC721RentalListing,
+  updateWhitelist,
 } from "../utils/helpers/diamond";
 import {
   BIGINT_ONE,
@@ -995,4 +998,22 @@ export function handleAavegotchiRentalCanceled(event: AavegotchiRentalCanceled):
   listing.time = event.params.time;
   listing.cancelled = true;
   listing.save();
+}
+
+export function handleWhitelistCreated(event: WhitelistCreated): void {
+  let whitelist = updateWhitelist(event.params.whitelistId, event);
+  if(whitelist == null) {
+      return;
+  }
+
+  whitelist.save();
+}
+
+export function handleWhitelistUpdated(event: WhitelistUpdated): void {
+  let whitelist = updateWhitelist(event.params.whitelistId, event);
+  if(whitelist == null) {
+      return;
+  }
+
+  whitelist.save();
 }

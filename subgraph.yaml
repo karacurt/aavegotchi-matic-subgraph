@@ -100,6 +100,10 @@ dataSources:
           handler: handleERC721ExecutedRental
         - event: AavegotchiRentalCanceled(indexed uint256,uint256)
           handler: handleAavegotchiRentalCanceled
+        - event: WhitelistCreated(indexed uint256)
+          handler: handleWhitelistCreated
+        - event: WhitelistUpdated(indexed uint256)
+          handler: handleWhitelistUpdated
         # - event: DiamondCut((address,uint8,bytes4[])[],address,bytes)
         #   handler: handleDiamondCut
   # - AavegotchiInteract(indexed uint256,uint256)
