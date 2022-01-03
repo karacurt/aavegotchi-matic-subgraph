@@ -279,11 +279,13 @@ type ERC721RentalListing @entity {
   tokenId: BigInt!
 
   owner: String!
-  rentee: String
+  rentee: String!
 
   time: BigInt!
   period: BigInt!
   amountPerDay: BigInt!
+
+  cancelled: Boolean!
 }
 
 #type Upgrade @entity {
