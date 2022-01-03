@@ -20,6 +20,7 @@ import {
   WearableSet,
   ERC1155Purchase,
   Parcel,
+  ERC721RentalListing,
 } from "../../../generated/schema";
 import { BIGINT_ZERO } from "../constants";
 import { Address, BigInt, Bytes, ethereum, log } from "@graphprotocol/graph-ts";
@@ -479,4 +480,13 @@ export function getOrCreateParcel(
   }
 
   return parcel as Parcel;
+}
+
+export function getOrCreateERC721RentalListing(id: string): ERC721RentalListing {
+  let listing = ERC721RentalListing.load(id);
+  if(!listing) {
+    listing = new ERC721RentalListing(id);
+  }
+
+  return listing;
 }
