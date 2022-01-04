@@ -277,13 +277,17 @@ type ERC721RentalListing @entity {
 
   erc721TokenAddress: String!
   tokenId: BigInt!
+  name: String
 
   owner: String!
   rentee: String!
 
-  time: BigInt!
+  timeAgreed: BigInt!
+  expiresOn: BigInt!
+
   period: BigInt!
-  initialCost: BigInt!
+  upfrontCosts: BigInt!
+  revenueSplit: [BigInt!]!
 
   cancelled: Boolean!
 }

@@ -492,6 +492,41 @@ export function getOrCreateERC721RentalListing(id: string): ERC721RentalListing 
   return listing;
 }
 
+export function updateAavegotchiRentalListing(listing: ERC721RentalListing, event: ethereum.Event): ERC721RentalListing {
+  let contract = AavegotchiDiamond.bind(event.address);
+  let response = contract.try_getAavegotchiRentalInfo(BigInt.fromString(listing.id));
+
+  if(response.reverted) {
+    return listing;
+  }
+
+  let value = response.value;
+
+  // update aavegotchi info
+  listing.name = value.value1.name;
+
+  // update rental listing
+  listing.erc721TokenAddress = value.value0.erc721TokenAddress.toHexString();
+  listing.tokenId = value.value0.erc721TokenId;
+
+  listing.owner = value.value0.originalOwner.toHexString();
+  listing.rentee = value.value0.renter.toHexString();
+
+  if(value.value0.timeAgreed.equals(BIGINT_ZERO)) {
+    listing.expiresOn = BIGINT_ZERO;
+  } else {
+    listing.expiresOn = value.value0.timeAgreed.plus(value.value0.period);
+  }
+
+  listing.revenueSplit = value.value0.revenueSplit;
+  listing.period = value.value0.period;
+  listing.upfrontCosts = value.value0.period.times(value.value0.amountPerDay.div(BigInt.fromI32(86400)));
+
+  listing.cancelled = value.value0.canceled;
+
+  return listing;
+}
+
 export function updateWhitelist(id: BigInt, event: ethereum.Event): Whitelist | null{
   let whitelist = Whitelist.load(id.toString());
   if(!whitelist) {

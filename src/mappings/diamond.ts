@@ -59,6 +59,7 @@ import {
   getOrCreateParcel,
   getOrCreateERC721RentalListing,
   updateWhitelist,
+  updateAavegotchiRentalListing,
 } from "../utils/helpers/diamond";
 import {
   BIGINT_ONE,
@@ -968,35 +969,20 @@ export function handleMintParcel(event: MintParcel): void {
 
 // Rentals
 export function handleAavegotchiRentalAdd(event: AavegotchiRentalAdd): void {
-    let listing = getOrCreateERC721RentalListing(event.params.rentalId.toString());
-    listing.erc721TokenAddress = event.params.erc721TokenAddress.toHexString();
-    listing.tokenId = event.params.erc721TokenId;
-    listing.owner = event.params.originalOwner.toHexString();
-    listing.rentee = "";
-    listing.time = event.params.time;
-    listing.period = event.params.period;
-    listing.initialCost = event.params.period.times(event.params.amountPerDay);
-    listing.cancelled = false;
-    listing.save();
+  let listing = getOrCreateERC721RentalListing(event.params.rentalId.toString());
+  listing = updateAavegotchiRentalListing(listing, event)
+  listing.save();
 }
 
 export function handleERC721ExecutedRental(event: ERC721ExecutedRental): void {
   let listing = getOrCreateERC721RentalListing(event.params.rentalId.toString());
-  listing.erc721TokenAddress = event.params.erc721TokenAddress.toHexString();
-  listing.tokenId = event.params.erc721TokenId;
-  listing.owner = event.params.originalOwner.toHexString();
-  listing.rentee = event.params.renter.toHexString();
-  listing.time = event.params.time;
-  listing.period = event.params.period;
-  listing.initialCost = event.params.period.times(event.params.amountPerDay);
-  listing.cancelled = false;
+  listing = updateAavegotchiRentalListing(listing, event)
   listing.save();
 }
 
 export function handleAavegotchiRentalCanceled(event: AavegotchiRentalCanceled): void {
   let listing = getOrCreateERC721RentalListing(event.params.rentalId.toString());
-  listing.time = event.params.time;
-  listing.cancelled = true;
+  listing = updateAavegotchiRentalListing(listing, event)
   listing.save();
 }
 
