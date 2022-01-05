@@ -77,6 +77,8 @@ type Aavegotchi @entity {
 
   listings: [ERC721Listing!]! @derivedFrom(field: "gotchi")
 
+  rentalListings: [ERC721RentalListing!]! @derivedFrom(field: "gotchi")
+
   "Block in which the Aavegotchi entity was created"
   createdAt: BigInt
 
@@ -275,9 +277,7 @@ type Parcel @entity {
 type ERC721RentalListing @entity {
   id: ID!
 
-  erc721TokenAddress: String!
-  tokenId: BigInt!
-  name: String
+  gotchi: Aavegotchi
 
   owner: String!
   rentee: String!

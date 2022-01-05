@@ -502,12 +502,8 @@ export function updateAavegotchiRentalListing(listing: ERC721RentalListing, even
 
   let value = response.value;
 
-  // update aavegotchi info
-  listing.name = value.value1.name;
-
   // update rental listing
-  listing.erc721TokenAddress = value.value0.erc721TokenAddress.toHexString();
-  listing.tokenId = value.value0.erc721TokenId;
+  listing.gotchi = value.value0.erc721TokenId.toString();
 
   listing.owner = value.value0.originalOwner.toHexString();
   listing.rentee = value.value0.renter.toHexString();
